@@ -26,7 +26,7 @@ public class ReverserClient {
 	Scanner kb = new Scanner(System.in);
 
 	//Create a member variable for your Socket.
-
+	Socket s = new Socket();
 	public boolean update() {
 		out.println(kb.nextLine());
 		String response;

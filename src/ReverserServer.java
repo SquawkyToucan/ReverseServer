@@ -19,13 +19,13 @@ import java.util.Scanner;
  */
 public class ReverserServer extends Thread {
 	/**
-	 * A private thread to handle capitalization requests on a particular
-	 * socket. The client terminates the dialogue by sending a single line
-	 * containing only a period.
+	 * A private thread to handle capitalization requests on a particular socket.
+	 * The client terminates the dialogue by sending a single line containing only a
+	 * period.
 	 * 
-	 * Services this thread's client by first sending the client a welcome
-	 * message then repeatedly reading strings and sending back the reversed
-	 * version of the string.
+	 * Services this thread's client by first sending the client a welcome message
+	 * then repeatedly reading strings and sending back the reversed version of the
+	 * string.
 	 */
 
 	// **** 1. Create member variables for your socket and client number;
@@ -33,11 +33,11 @@ public class ReverserServer extends Thread {
 	int clientNumber = 0;
 
 	/**
-	 * Application method to run the server runs in an infinite loop listening
-	 * on port 9898. When a connection is requested, it spawns a new thread to
-	 * do the servicing and immediately returns to listening. The server keeps a
-	 * unique client number for each client that connects just to show
-	 * interesting logging messages. It is certainly not necessary to do this.
+	 * Application method to run the server runs in an infinite loop listening on
+	 * port 9898. When a connection is requested, it spawns a new thread to do the
+	 * servicing and immediately returns to listening. The server keeps a unique
+	 * client number for each client that connects just to show interesting logging
+	 * messages. It is certainly not necessary to do this.
 	 */
 
 	// 2 ****. create a constructor for your ReverserServer that takes in a
@@ -58,11 +58,11 @@ public class ReverserServer extends Thread {
 			// 3. Create a Scanner and pass in your socket's inputStream. (hint:
 			// it's a getter)
 			Scanner in = new Scanner(socket.getInputStream());
-
+			Scanner niriri = new Scanner(System.in);
 			// 4. Create a PrintWriter 'out', and pass it your socket's output
 			// stream.
 			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-
+			
 			// 5. Use your PrintWriter Send a welcome message to the client.
 			out.println("Hello, you are client #" + clientNumber + ".");
 			out.println("Enter a line with only a period to quit\n");
@@ -70,12 +70,19 @@ public class ReverserServer extends Thread {
 			while (true) {
 				// 6. read each line using your BufferedReader. This is the user
 				// input
+				try {
 					String input = in.nextLine();
-					if (input == null || input.equals(".")) {
+					if (input.equals(".")) {
 						break;
 					}
-					out.println(input.toUpperCase());
+					System.out.println(input);
+					String toTheClient = niriri.nextLine();
+					out.println(toTheClient);
+				} catch (Exception e) {
+					out.println("You didn't say anything...");
 				}
+
+			}
 		} catch (IOException e) {
 			log("Error handling client# " + clientNumber + ": " + e);
 		} finally {
@@ -90,8 +97,8 @@ public class ReverserServer extends Thread {
 	}
 
 	/**
-	 * Logs a simple message. In this case we just write the message to the
-	 * server applications standard output.
+	 * Logs a simple message. In this case we just write the message to the server
+	 * applications standard output.
 	 */
 	public static void main(String[] args) throws Exception {
 		System.out.println("The capitalization server is running.");
